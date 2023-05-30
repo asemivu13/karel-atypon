@@ -159,53 +159,6 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 			moveRobot(1, true, Direction.TURN_LEFT, Direction.TURN_LEFT);
 			moveRobot(maximum - 1, true, Direction.NONE, Direction.NONE);
-
-
-
-
-
-
-
-
-//			if (this.width <= this.height)
-//				moveRobot(this.width / 2 - 1, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
-//			else
-//				moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
-//			putBeeper();
-//			moveRobot(maximum - (maximum / 2 - blockSize), true, Direction.NONE, Direction.NONE);
-//			moveRobot(maximum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-//
-//			moveRobot(maximum / 2 - blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(1, true, Direction.NONE, Direction.NONE);
-//			moveRobot(1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-//
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(2 *  blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(1, false, Direction.NONE, Direction.TURN_LEFT);
-//
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.NONE);
-//			moveRobot(blockSize, false, Direction.TURN_RIGHT, Direction.TURN_AROUND);
-//
-//			putBeeper();
-//
-//			moveRobot(2 * blockSize - 1, true, Direction.NONE, Direction.NONE);
-//
-//			moveRobot(blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-//
-//			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 		} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width > this.height) {
 			System.out.println(blockSize);
 			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
@@ -213,32 +166,18 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(maximum / 2 - 1 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
-
-//			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(1, true, Direction.NONE, Direction.NONE);
 			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_LEFT);
-
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
-
-//			moveRobot(minimum / 2 - blockSize, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(minimum / 2 - blockSize, false, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(1, true, Direction.NONE, Direction.NONE);
 			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_LEFT);
-
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
@@ -246,43 +185,24 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_AROUND); putBeeper();
-//			moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-
-//			moveRobot(2 * blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-
 		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width < this.height) {
 			moveRobot(width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
-
 			putBeeper();
 			moveRobot(maximum / 2 - 1 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(1, true, Direction.NONE, Direction.NONE);
 			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
-
-
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(1, true, Direction.NONE, Direction.NONE);
 			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_LEFT);
-
-//			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(1, true, Direction.NONE, Direction.TURN_LEFT);
@@ -291,43 +211,6 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 
-
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-
-
-//			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(2 * blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-
-//			moveRobot(1, false, Direction.NONE, Direction.TURN_LEFT);
-//			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-//
-//			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-//			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_AROUND); putBeeper();
-//			moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_AROUND);
-//			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
-//			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-//
-//			// this is just for this case
-//			moveRobot(1, true, Direction.TURN_LEFT, Direction.TURN_LEFT);
-//			moveRobot(maximum - 1, true, Direction.NONE, Direction.NONE);
 		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width > this.height) {
 			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
 			putBeeper();
@@ -337,20 +220,15 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(maximum / 2 - blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
 			moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(2 *  blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
 			moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 			moveRobot(blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
 			moveRobot(blockSize, false, Direction.NONE, Direction.NONE);
@@ -358,10 +236,6 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
 			moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 		}
-		System.out.println(numSteps);
 		numSteps = 0;
 	}
 }
-// 7 x 50 fail
-// odd x even will work now
-// even x odd will work
