@@ -1,0 +1,35 @@
+Dimension: (11, 11)
+Beeper: (1, 1) 1
+Beeper: (2, 1) 1
+Beeper: (2, 2) 1
+Beeper: (2, 3) 1
+Beeper: (2, 4) 1
+Beeper: (2, 5) 1
+Beeper: (2, 6) 1
+Beeper: (2, 7) 1
+Beeper: (2, 8) 1
+Beeper: (2, 9) 1
+Beeper: (2, 10) 1
+Beeper: (3, 10) 1
+Beeper: (4, 10) 1
+Beeper: (5, 10) 1
+Beeper: (6, 1) 1
+Beeper: (6, 2) 2
+Beeper: (6, 3) 1
+Beeper: (6, 4) 1
+Beeper: (6, 5) 1
+Beeper: (6, 6) 1
+Beeper: (6, 7) 1
+Beeper: (6, 8) 1
+Beeper: (6, 9) 1
+Beeper: (6, 10) 3
+Beeper: (6, 11) 1
+Beeper: (7, 10) 2
+Beeper: (8, 10) 2
+Beeper: (9, 10) 2
+Beeper: (10, 10) 2
+Beeper: (11, 10) 1
+Karel: (3, 1) east
+
+BeeperBag: INFINITE
+Speed: 0.00
