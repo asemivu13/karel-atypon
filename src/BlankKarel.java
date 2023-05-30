@@ -74,26 +74,9 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
 		putBeeper();
 		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
+		functionizeTest(blockSize, minimum, false, (extraMove ? 0 : 1), extraMove);
+
 		moveRobot(blockSize + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-		moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-
-		moveRobot(blockSize + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(2 * blockSize + 1 + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-		moveRobot(minimum / 2 - blockSize - 1, false, Direction.NONE, Direction.TURN_LEFT);
-
-		moveRobot(blockSize + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize , true, Direction.NONE, Direction.TURN_RIGHT);
-
-		if (!extraMove) {
-			moveRobot(1, false, Direction.NONE, Direction.TURN_LEFT);
-			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-		}
-
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_AROUND);
 		putBeeper();
 		moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_AROUND);
@@ -105,41 +88,42 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(maximum - 1, true, Direction.NONE, Direction.NONE);
 		}
 	}
+	private void functionizeTest(int blockSize, int minimum, boolean isDoubleLines, int shiftAmount, boolean extraMove) {
+		moveRobot(blockSize + (isDoubleLines ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
+		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_LEFT);
+		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+
+		if (isDoubleLines && !extraMove) {
+			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
+			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
+		} else {
+			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
+		}
+		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
+		moveRobot(2 *  blockSize + 1 + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
+		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_LEFT);
+		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+
+		if (isDoubleLines && !extraMove) {
+			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
+			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
+		} else {
+			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
+		}
+		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
+		moveRobot(blockSize + (isDoubleLines ? 1 : 0) + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
+	}
 	private void function1(boolean extraMove, int minimum, int maximum, int blockSize) {
 		if (this.width <= this.height)
 			moveRobot(this.width / 2 - 1, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
 		else
 			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
-
 		putBeeper();
-
 		moveRobot(maximum - (maximum / 2 - blockSize) - (extraMove ? 1 : 0), true, Direction.NONE, Direction.NONE);
 		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
 		moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
 		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
-
-		if (!extraMove) {
-			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
-			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		} else {
-			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-		}
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(2 *  blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
-
-		if (!extraMove) {
-			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
-			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		} else {
-			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-		}
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_RIGHT);
+		functionizeTest(blockSize, minimum, true, 0, extraMove);
 		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 		moveRobot(blockSize - 1, true, Direction.NONE, Direction.NONE);
 
@@ -215,12 +199,14 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
 
 		// (width = 10, height = 15) height > width
+			// (15, 10), (49, 10), (9, 8), (49, 48)
 		} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width < this.height) {
 			function3(blockSize, true, maximum, minimum);
 		} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width > this.height) {
 			function2(false, blockSize, maximum, minimum);
 		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width < this.height) {
 			function2(true, blockSize, maximum, minimum);
+		// width = 49 height = 20 (49 > 20)  e.g. to try = (20, 49) (30, 49), (8, 49), (8, 9)
 		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width > this.height) {
 			function1(true, minimum, maximum, blockSize);
 		}
