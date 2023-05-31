@@ -156,18 +156,22 @@ public class BlankKarel extends SuperKarel {
 
 		int blockSize = minimum / 2 - 2;
 
-		if (this.width % 2 == 1 && this.height % 2 == 1) {
-			function3(blockSize, false, maximum, minimum);
-		} else if (this.width % 2 == 0 && this.height % 2 == 0) {
-			function1(false, minimum, maximum, blockSize);
-		} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width < this.height) {
-			function3(blockSize, true, maximum, minimum);
-		} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width > this.height) {
-			function2(false, blockSize, maximum, minimum);
-		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width < this.height) {
-			function2(true, blockSize, maximum, minimum);
-		} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width > this.height) {
-			function1(true, minimum, maximum, blockSize);
+		if (this.width < 6 || this.height < 6) {
+			System.out.println("The dimension is not valid to create the required shape");
+		}else {
+			if (this.width % 2 == 1 && this.height % 2 == 1) {
+				function3(blockSize, false, maximum, minimum);
+			} else if (this.width % 2 == 0 && this.height % 2 == 0) {
+				function1(false, minimum, maximum, blockSize);
+			} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width < this.height) {
+				function3(blockSize, true, maximum, minimum);
+			} else if (this.width % 2 == 0 && this.height % 2 == 1) {
+				function2(false, blockSize, maximum, minimum);
+			} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width < this.height) {
+				function2(true, blockSize, maximum, minimum);
+			} else if (this.width % 2 == 1 && this.height % 2 == 0) {
+				function1(true, minimum, maximum, blockSize);
+			}
 		}
 		numSteps = 0;
 	}
