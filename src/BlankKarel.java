@@ -2,8 +2,7 @@ import stanford.karel.SuperKarel;
 public class BlankKarel extends SuperKarel {
 	enum Direction {
 		NONE,
-		TURN_LEFT,
-		TURN_RIGHT,
+		TURN_LEFT, TURN_RIGHT,
 		TURN_AROUND
 	}
 
@@ -32,18 +31,18 @@ public class BlankKarel extends SuperKarel {
 		moveRobot(maximum / 2 - blockSize - 2, true, Direction.NONE, Direction.TURN_LEFT);
 		drawCommonPattern(true, minimum, false);
 		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
-		moveRobot(blockSize, true,
-				leftIsRight ? Direction.TURN_RIGHT : Direction.TURN_LEFT,
-				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
 
+		Direction left = Direction.TURN_LEFT;
+		Direction right = Direction.TURN_RIGHT;
+		if (leftIsRight) {
+			left = Direction.TURN_RIGHT;
+			right = Direction.TURN_LEFT;
+		}
+		moveRobot(blockSize, true, left, right);
 		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(2 * blockSize, true,
-				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
-				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
+		moveRobot(2 * blockSize, true, right, right);
 		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(blockSize, true,
-				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
-				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
+		moveRobot(blockSize, true, right, right);
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 	}
 	private void handleOddCase(int minimum, int maximum) {
@@ -86,15 +85,15 @@ public class BlankKarel extends SuperKarel {
 		moveRobot(blockSize + 1, true, Direction.NONE, left);
 		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
 
-		if (!isDoubleLine) {
-			moveRobot(blockSize, false, Direction.TURN_AROUND, Direction.NONE);
-			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_AROUND);
-			moveRobot(blockSize, false, Direction.NONE, right);
-		} else {
+		if (isDoubleLine) {
 			moveRobot(1, true, right, right);
 			moveRobot(2 * blockSize + 1, true, Direction.NONE, right);
 			moveRobot(1, true, Direction.NONE, right);
 			moveRobot(blockSize, true, Direction.NONE, right);
+		} else {
+			moveRobot(blockSize, false, Direction.TURN_AROUND, Direction.NONE);
+			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_AROUND);
+			moveRobot(blockSize, false, Direction.NONE, right);
 		}
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 	}
