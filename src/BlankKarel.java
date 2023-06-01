@@ -82,8 +82,9 @@ public class BlankKarel extends SuperKarel {
 		moveRobot(1, true, Direction.NONE, left);
 		moveRobot(distanceBetweenWallAndBlock - 1, true, Direction.NONE, right);
 		drawCommonPattern(isDoubleLine, minimum, width <= height);
+
 		moveRobot(blockSize + 1, true, Direction.NONE, left);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
+		moveRobot(blockSize + (minimum % 2 == 0 ? 1 : 0), isDoubleLine, Direction.NONE, Direction.NONE);
 
 		if (isDoubleLine) {
 			moveRobot(1, true, right, right);
@@ -91,8 +92,8 @@ public class BlankKarel extends SuperKarel {
 			moveRobot(1, true, Direction.NONE, right);
 			moveRobot(blockSize, true, Direction.NONE, right);
 		} else {
-			moveRobot(blockSize, false, Direction.TURN_AROUND, Direction.NONE);
-			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_AROUND);
+			putBeeper();
+			moveRobot(2 * blockSize + (minimum % 2 == 0 ? 1 : 0), true, Direction.TURN_AROUND, Direction.TURN_AROUND);
 			moveRobot(blockSize, false, Direction.NONE, right);
 		}
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
@@ -177,10 +178,10 @@ public class BlankKarel extends SuperKarel {
 				else
 					handleMixCase(false, minimum, maximum);
 			else
-				if (this.width > this.height)
-					handleEvenCase(false, minimum, maximum);
-				else
-					handleMixCase(true, minimum, maximum);
+			if (this.width > this.height)
+				handleEvenCase(false, minimum, maximum);
+			else
+				handleMixCase(true, minimum, maximum);
 			System.out.println("Width: " + width + ", Height: " + height + ", BlockSize: " + blockSize + ", Number of steps taken: " + numSteps);
 		}
 	}
