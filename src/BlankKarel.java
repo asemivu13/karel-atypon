@@ -28,11 +28,7 @@ public class BlankKarel extends SuperKarel {
 	}
 	private void handleMixCase(boolean leftIsRight, int minimum, int maximum) {
 		System.out.println("Mix Case::");
-		if (width <= height)
-			moveRobot(width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
-		else
-			moveRobot(height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
-		putBeeper();
+		findStartingPoint();
 		moveRobot(maximum / 2 - blockSize - 2, true, Direction.NONE, Direction.TURN_LEFT);
 		drawCommonPattern(true, minimum, false);
 		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
@@ -52,11 +48,7 @@ public class BlankKarel extends SuperKarel {
 	}
 	private void handleOddCase(int minimum, int maximum) {
 		System.out.println("Odd Case::");
-		if (width <= height)
-			moveRobot(width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
-		else
-			moveRobot(height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
-		putBeeper();
+		findStartingPoint();
 		moveRobot(maximum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
 		drawCommonPattern(false, minimum, false);
 		moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
@@ -66,16 +58,16 @@ public class BlankKarel extends SuperKarel {
 		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 	}
-	//
-	private void handleEvenCase(boolean isDoubleLine, int minimum, int maximum) {
-		System.out.println("Even Case::");
+	private void findStartingPoint() {
 		if (this.width <= this.height)
 			moveRobot(this.width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
 		else
 			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
 		putBeeper();
-
-		int differenceBetweenWallAndBlock = (maximum - 1) / 2 - blockSize;
+	}
+	private void handleEvenCase(boolean isDoubleLine, int minimum, int maximum) {
+		System.out.println("Even Case::");
+		findStartingPoint();
 
 		Direction left = Direction.TURN_LEFT;
 		Direction right = Direction.TURN_RIGHT;
@@ -84,10 +76,12 @@ public class BlankKarel extends SuperKarel {
 			right = Direction.TURN_LEFT;
 		}
 
-		moveRobot(maximum - differenceBetweenWallAndBlock, true, Direction.NONE, Direction.NONE);
-		moveRobot(differenceBetweenWallAndBlock - 1, true, Direction.NONE, left);
+		int distanceBetweenWallAndBlock = (maximum - 1) / 2 - blockSize;
+
+		moveRobot(maximum - distanceBetweenWallAndBlock, true, Direction.NONE, Direction.NONE);
+		moveRobot(distanceBetweenWallAndBlock - 1, true, Direction.NONE, left);
 		moveRobot(1, true, Direction.NONE, left);
-		moveRobot(differenceBetweenWallAndBlock - 1, true, Direction.NONE, right);
+		moveRobot(distanceBetweenWallAndBlock - 1, true, Direction.NONE, right);
 		drawCommonPattern(isDoubleLine, minimum, width <= height);
 		moveRobot(blockSize + 1, true, Direction.NONE, left);
 		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
