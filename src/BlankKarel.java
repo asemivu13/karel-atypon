@@ -7,16 +7,17 @@ public class BlankKarel extends SuperKarel {
 		TURN_AROUND
 	}
 
-	private int numSteps;
+	private int blockSize;
 	private int width;
 	private int height;
+	private int numSteps;
 
 	private int calculateBlocksUntilReachWall() {
 		int counter = 1;
 		while (frontIsClear()) {
 			counter += 1;
 			move();
-			this.numSteps += 1;
+			numSteps += 1;
 		}
 		return counter;
 	}
@@ -25,154 +26,169 @@ public class BlankKarel extends SuperKarel {
 		turnLeft();
 		this.height = calculateBlocksUntilReachWall();
 	}
-	private void function2(boolean flip, int blockSize, int maximum, int minimum) {
-		if (!flip) {
-			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
-		} else {
-			moveRobot(this.width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
-		}
-		putBeeper();
-		moveRobot(maximum / 2 - 1 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		functionizeTest(blockSize, minimum, false, 1, false, true);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
-		moveRobot(blockSize, true,
-				flip ? Direction.TURN_RIGHT : Direction.TURN_LEFT,
-				flip ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
-
-		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(2 * blockSize, true,
-				flip ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
-				flip ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
-		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(blockSize, true,
-				flip ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
-				flip ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
-		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-	}
-	private void function3(int blockSize, boolean extraMove, int maximum, int minimum) {
+	private void handleMixCase(boolean leftIsRight, int minimum, int maximum) {
+		System.out.println("Mix Case::");
 		if (width <= height)
 			moveRobot(width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
 		else
 			moveRobot(height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
 		putBeeper();
-		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		functionizeTest(blockSize, minimum, false, (extraMove ? 0 : 1), extraMove, false);
+		moveRobot(maximum / 2 - blockSize - 2, true, Direction.NONE, Direction.TURN_LEFT);
+		drawCommonPattern(true, minimum, false);
+		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
+		moveRobot(blockSize, true,
+				leftIsRight ? Direction.TURN_RIGHT : Direction.TURN_LEFT,
+				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
 
-		moveRobot(blockSize + (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
+		moveRobot(1, true, Direction.NONE, Direction.NONE);
+		moveRobot(2 * blockSize, true,
+				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
+				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
+		moveRobot(1, true, Direction.NONE, Direction.NONE);
+		moveRobot(blockSize, true,
+				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT,
+				leftIsRight ? Direction.TURN_LEFT : Direction.TURN_RIGHT);
+		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
+	}
+	private void handleOddCase(int minimum, int maximum) {
+		System.out.println("Odd Case::");
+		if (width <= height)
+			moveRobot(width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
+		else
+			moveRobot(height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
+		putBeeper();
+		moveRobot(maximum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
+		drawCommonPattern(false, minimum, false);
+		moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
 		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_AROUND);
 		putBeeper();
 		moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_AROUND);
 		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
-
-		if (extraMove) {
-			moveRobot(1, true, Direction.TURN_LEFT, Direction.TURN_LEFT);
-			moveRobot(maximum - 1, true, Direction.NONE, Direction.NONE);
-		}
 	}
-	private void functionizeTest(int blockSize, int minimum, boolean isDoubleLines, int shiftAmount, boolean extraMove, boolean toFixIt) {
-		// blockSize, minimum, false, 1, false
-		moveRobot(blockSize + (isDoubleLines ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
-
-		if ((isDoubleLines && !extraMove) || toFixIt) {
-			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
-			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		} else {
-			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-		}
-		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(2 *  blockSize + 1 + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
-
-		if ((isDoubleLines && !extraMove) || toFixIt) {
-			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
-			moveRobot(minimum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		} else {
-			moveRobot(minimum / 2 - blockSize - 1, false, Direction.TURN_AROUND, Direction.TURN_LEFT);
-		}
-		moveRobot(blockSize + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(blockSize + (isDoubleLines ? 1 : 0) + shiftAmount, true, Direction.NONE, Direction.TURN_RIGHT);
-	}
-	private void function1(boolean extraMove, int minimum, int maximum, int blockSize) {
+	//
+	private void handleEvenCase(boolean isDoubleLine, int minimum, int maximum) {
+		System.out.println("Even Case::");
 		if (this.width <= this.height)
-			moveRobot(this.width / 2 - 1, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
+			moveRobot(this.width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
 		else
 			moveRobot(this.height / 2, false, Direction.TURN_AROUND, Direction.TURN_RIGHT);
 		putBeeper();
-		moveRobot(maximum - (maximum / 2 - blockSize) - (extraMove ? 1 : 0), true, Direction.NONE, Direction.NONE);
-		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(maximum / 2 - blockSize - (extraMove ? 0 : 1), true, Direction.NONE, Direction.TURN_LEFT);
-		functionizeTest(blockSize, minimum, true, 0, extraMove, false);
-		moveRobot(blockSize, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(blockSize - 1, true, Direction.NONE, Direction.NONE);
 
-		if (!extraMove) {
-			moveRobot(1, true, Direction.TURN_RIGHT, Direction.TURN_RIGHT);
-			moveRobot(2 * blockSize - 1, true, Direction.NONE, Direction.TURN_RIGHT);
-			moveRobot(1, true, Direction.NONE, Direction.TURN_RIGHT);
-			moveRobot(blockSize, true, Direction.NONE, Direction.TURN_RIGHT);
-		} else {
+		int differenceBetweenWallAndBlock = (maximum - 1) / 2 - blockSize;
+
+		Direction left = Direction.TURN_LEFT;
+		Direction right = Direction.TURN_RIGHT;
+		if (width > height) {
+			left = Direction.TURN_RIGHT;
+			right = Direction.TURN_LEFT;
+		}
+
+		moveRobot(maximum - differenceBetweenWallAndBlock, true, Direction.NONE, Direction.NONE);
+		moveRobot(differenceBetweenWallAndBlock - 1, true, Direction.NONE, left);
+		moveRobot(1, true, Direction.NONE, left);
+		moveRobot(differenceBetweenWallAndBlock - 1, true, Direction.NONE, right);
+		drawCommonPattern(isDoubleLine, minimum, width <= height);
+		moveRobot(blockSize + 1, true, Direction.NONE, left);
+		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
+
+		if (!isDoubleLine) {
 			moveRobot(blockSize, false, Direction.TURN_AROUND, Direction.NONE);
-			moveRobot(blockSize - 1, true, Direction.NONE, Direction.TURN_AROUND);
-			moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
+			moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_AROUND);
+			moveRobot(blockSize, false, Direction.NONE, right);
+		} else {
+			moveRobot(1, true, right, right);
+			moveRobot(2 * blockSize + 1, true, Direction.NONE, right);
+			moveRobot(1, true, Direction.NONE, right);
+			moveRobot(blockSize, true, Direction.NONE, right);
 		}
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
 	}
-	private void moveRobot(int amount, boolean beep, Direction initialTurn, Direction endTurn) {
-		int counter = 0;
-		switch (initialTurn) {
-			case TURN_AROUND: turnAround(); break;
-			case TURN_LEFT: turnLeft(); break;
-			case TURN_RIGHT: turnRight(); break;
-			default: break;
+	private void drawCommonPattern(boolean isDoubleLines, int minimum, boolean leftIsRight) {
+		Direction left = Direction.TURN_LEFT;
+		Direction right = Direction.TURN_RIGHT;
+		int fixAmount = 0;
+
+		if (leftIsRight) {
+			left = Direction.TURN_RIGHT;
+			right = Direction.TURN_LEFT;
 		}
-		while (counter != amount) {
-			move();
-			this.numSteps += 1;
-			if (beep) putBeeper();
-			counter += 1;
+		if (minimum % 2 == 0) fixAmount = 1;
+
+		moveRobot(blockSize + 1, true, Direction.NONE, right);
+		moveRobot(blockSize + 1, true, Direction.NONE, left);
+		moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+
+		if (isDoubleLines) {
+			moveRobot(1, true, right, right);
+			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, left);
+		} else {
+			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, false, Direction.TURN_AROUND, left);
 		}
-		switch (endTurn) {
+		moveRobot(blockSize + 1, true, Direction.NONE, right);
+		moveRobot(2 * blockSize + 2 + fixAmount, true, Direction.NONE, right);
+		moveRobot(blockSize + 1, true, Direction.NONE, left);
+		moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+
+		if (isDoubleLines) {
+			moveRobot(1, true, right, right);
+			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, left);
+		} else {
+			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, false, Direction.TURN_AROUND, left);
+		}
+		moveRobot(blockSize + 1, true, Direction.NONE, right);
+		moveRobot(blockSize + 1 + fixAmount, true, Direction.NONE, right);
+	}
+	private void commandSwitcher(Direction direction) {
+		switch (direction) {
 			case TURN_AROUND: turnAround(); break;
 			case TURN_LEFT: turnLeft(); break;
 			case TURN_RIGHT: turnRight(); break;
 			default: break;
 		}
 	}
-	// todo: fix the the turning (it works but i guess i can do better)
-	private void turnMoveAndComeBack(int amount, Direction startDirection, Direction endDirection) {
-		moveRobot(amount, true, Direction.NONE, startDirection);
-		moveRobot(amount, false, Direction.NONE, endDirection);
+	private void moveRobot(int amount, boolean beep, Direction initialTurn, Direction endTurn) {
+		int counter = 0;
+		commandSwitcher(initialTurn);
+		while (counter != amount) {
+			move();
+			numSteps += 1;
+			if (beep) putBeeper();
+			counter += 1;
+		}
+		commandSwitcher(endTurn);
+	}
+	private int calculateBlockSize(int minimum) {
+		if (minimum % 2 == 0)
+			minimum -= 1;
+		return minimum / 2 - 2;
 	}
 	public void run() {
 		calculateHeightAndWidth();
 
 		int minimum = Math.min(this.width, this.height);
 		int maximum = Math.max(this.width, this.height);
-
-		int blockSize = minimum / 2 - 2;
+		blockSize = calculateBlockSize(minimum);
+		numSteps = 0;
 
 		if (this.width < 6 || this.height < 6) {
 			System.out.println("The dimension is not valid to create the required shape");
-		}else {
-			if (this.width % 2 == 1 && this.height % 2 == 1) {
-				function3(blockSize, false, maximum, minimum);
-			} else if (this.width % 2 == 0 && this.height % 2 == 0) {
-				function1(false, minimum, maximum, blockSize);
-			} else if (this.width % 2 == 0 && this.height % 2 == 1 && this.width < this.height) {
-				function3(blockSize, true, maximum, minimum);
-			} else if (this.width % 2 == 0 && this.height % 2 == 1) {
-				function2(false, blockSize, maximum, minimum);
-			} else if (this.width % 2 == 1 && this.height % 2 == 0 && this.width < this.height) {
-				function2(true, blockSize, maximum, minimum);
-			} else if (this.width % 2 == 1 && this.height % 2 == 0) {
-				function1(true, minimum, maximum, blockSize);
-			}
+		} else {
+			if (this.width % 2 == 1 && this.height % 2 == 1)
+				handleOddCase(minimum, maximum);
+			else if (this.width % 2 == 0 && this.height % 2 == 0)
+				handleEvenCase(true, minimum, maximum);
+			else if (this.width % 2 == 0)
+				if (this.width < this.height)
+					handleEvenCase(false, minimum, maximum);
+				else
+					handleMixCase(false, minimum, maximum);
+			else
+				if (this.width > this.height)
+					handleEvenCase(false, minimum, maximum);
+				else
+					handleMixCase(true, minimum, maximum);
+			System.out.println("Width: " + width + ", Height: " + height + ", BlockSize: " + blockSize + ", Number of steps taken: " + numSteps);
 		}
-		numSteps = 0;
 	}
 }
