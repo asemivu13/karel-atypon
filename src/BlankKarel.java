@@ -6,7 +6,7 @@ public class BlankKarel extends SuperKarel {
 		TURN_AROUND
 	}
 
-	private int blockSize;
+	private int largestSquareSize;
 	private int width;
 	private int height;
 	private int numSteps;
@@ -25,39 +25,43 @@ public class BlankKarel extends SuperKarel {
 		turnLeft();
 		this.height = calculateBlocksUntilReachWall();
 	}
-	private void handleMixCase(boolean leftIsRight, int minimum, int maximum) {
-		System.out.println("Mix Case::");
-		findStartingPoint();
-		moveRobot(maximum / 2 - blockSize - 2, true, Direction.NONE, Direction.TURN_LEFT);
-		drawCommonPattern(true, minimum, false);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.NONE);
-
+	private void drawInnerShape(boolean isDoubleLine, boolean leftIsRight, int minimum, int maximum) {
 		Direction left = Direction.TURN_LEFT;
 		Direction right = Direction.TURN_RIGHT;
 		if (leftIsRight) {
 			left = Direction.TURN_RIGHT;
 			right = Direction.TURN_LEFT;
 		}
-		moveRobot(blockSize, true, left, right);
-		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(2 * blockSize, true, right, right);
-		moveRobot(1, true, Direction.NONE, Direction.NONE);
-		moveRobot(blockSize, true, right, right);
+
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, left);
+		moveRobot(largestSquareSize, isDoubleLine, Direction.NONE, Direction.NONE);
+
+		if (isDoubleLine) {
+			moveRobot(1, true, right, right);
+			moveRobot(2 * largestSquareSize + (minimum % 2 == 0 ? 1 : 0), true, Direction.NONE, right);
+			moveRobot(1, true, Direction.NONE, right);
+			moveRobot(largestSquareSize + (minimum % 2 == 0 ? 1 : 0), true, Direction.NONE, right);
+		} else {
+			putBeeper();
+			moveRobot(2 * largestSquareSize + (minimum % 2 == 0 ? 1 : 0), true, Direction.TURN_AROUND, Direction.TURN_AROUND);
+			moveRobot(largestSquareSize + (minimum % 2 == 0 ? 1 : 0), false, Direction.NONE, right);
+		}
 		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
+	}
+	private void handleMixCase(boolean leftIsRight, int minimum, int maximum) {
+		moveToStartingPoint();
+		moveRobot(maximum / 2 - largestSquareSize - 2, true, Direction.NONE, Direction.TURN_LEFT);
+		drawOuterShape(true, minimum, false);
+		drawInnerShape(true, leftIsRight, minimum, maximum);
+
 	}
 	private void handleOddCase(int minimum, int maximum) {
-		System.out.println("Odd Case::");
-		findStartingPoint();
-		moveRobot(maximum / 2 - blockSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
-		drawCommonPattern(false, minimum, false);
-		moveRobot(blockSize + 1, true, Direction.NONE, Direction.TURN_LEFT);
-		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_AROUND);
-		putBeeper();
-		moveRobot(2 * blockSize, true, Direction.NONE, Direction.TURN_AROUND);
-		moveRobot(blockSize, false, Direction.NONE, Direction.TURN_RIGHT);
-		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
+		moveToStartingPoint();
+		moveRobot(maximum / 2 - largestSquareSize - 1, true, Direction.NONE, Direction.TURN_LEFT);
+		drawOuterShape(false, minimum, false);
+		drawInnerShape(false, false, minimum, maximum);
 	}
-	private void findStartingPoint() {
+	private void moveToStartingPoint() {
 		if (this.width <= this.height)
 			moveRobot(this.width / 2, false, Direction.TURN_LEFT, Direction.TURN_LEFT);
 		else
@@ -65,8 +69,7 @@ public class BlankKarel extends SuperKarel {
 		putBeeper();
 	}
 	private void handleEvenCase(boolean isDoubleLine, int minimum, int maximum) {
-		System.out.println("Even Case::");
-		findStartingPoint();
+		moveToStartingPoint();
 
 		Direction left = Direction.TURN_LEFT;
 		Direction right = Direction.TURN_RIGHT;
@@ -75,30 +78,16 @@ public class BlankKarel extends SuperKarel {
 			right = Direction.TURN_LEFT;
 		}
 
-		int distanceBetweenWallAndBlock = (maximum - 1) / 2 - blockSize;
+		int distanceBetweenWallAndBlock = (maximum - 1) / 2 - largestSquareSize;
 
 		moveRobot(maximum - distanceBetweenWallAndBlock, true, Direction.NONE, Direction.NONE);
 		moveRobot(distanceBetweenWallAndBlock - 1, true, Direction.NONE, left);
 		moveRobot(1, true, Direction.NONE, left);
 		moveRobot(distanceBetweenWallAndBlock - 1, true, Direction.NONE, right);
-		drawCommonPattern(isDoubleLine, minimum, width <= height);
-
-		moveRobot(blockSize + 1, true, Direction.NONE, left);
-		moveRobot(blockSize + (minimum % 2 == 0 ? 1 : 0), isDoubleLine, Direction.NONE, Direction.NONE);
-
-		if (isDoubleLine) {
-			moveRobot(1, true, right, right);
-			moveRobot(2 * blockSize + 1, true, Direction.NONE, right);
-			moveRobot(1, true, Direction.NONE, right);
-			moveRobot(blockSize, true, Direction.NONE, right);
-		} else {
-			putBeeper();
-			moveRobot(2 * blockSize + (minimum % 2 == 0 ? 1 : 0), true, Direction.TURN_AROUND, Direction.TURN_AROUND);
-			moveRobot(blockSize, false, Direction.NONE, right);
-		}
-		moveRobot(maximum / 2, true, Direction.NONE, Direction.NONE);
+		drawOuterShape(isDoubleLine, minimum, width <= height);
+		drawInnerShape(isDoubleLine, width <= height, minimum, maximum);
 	}
-	private void drawCommonPattern(boolean isDoubleLines, int minimum, boolean leftIsRight) {
+	private void drawOuterShape(boolean isDoubleLines, int minimum, boolean leftIsRight) {
 		Direction left = Direction.TURN_LEFT;
 		Direction right = Direction.TURN_RIGHT;
 		int fixAmount = 0;
@@ -109,29 +98,29 @@ public class BlankKarel extends SuperKarel {
 		}
 		if (minimum % 2 == 0) fixAmount = 1;
 
-		moveRobot(blockSize + 1, true, Direction.NONE, right);
-		moveRobot(blockSize + 1, true, Direction.NONE, left);
-		moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, right);
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, left);
+		moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, true, Direction.NONE, Direction.NONE);
 
 		if (isDoubleLines) {
 			moveRobot(1, true, right, right);
-			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, left);
+			moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, true, Direction.NONE, left);
 		} else {
-			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, false, Direction.TURN_AROUND, left);
+			moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, false, Direction.TURN_AROUND, left);
 		}
-		moveRobot(blockSize + 1, true, Direction.NONE, right);
-		moveRobot(2 * blockSize + 2 + fixAmount, true, Direction.NONE, right);
-		moveRobot(blockSize + 1, true, Direction.NONE, left);
-		moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, Direction.NONE);
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, right);
+		moveRobot(2 * largestSquareSize + 2 + fixAmount, true, Direction.NONE, right);
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, left);
+		moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, true, Direction.NONE, Direction.NONE);
 
 		if (isDoubleLines) {
 			moveRobot(1, true, right, right);
-			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, true, Direction.NONE, left);
+			moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, true, Direction.NONE, left);
 		} else {
-			moveRobot((minimum - fixAmount) / 2 - blockSize - 1, false, Direction.TURN_AROUND, left);
+			moveRobot((minimum - fixAmount) / 2 - largestSquareSize - 1, false, Direction.TURN_AROUND, left);
 		}
-		moveRobot(blockSize + 1, true, Direction.NONE, right);
-		moveRobot(blockSize + 1 + fixAmount, true, Direction.NONE, right);
+		moveRobot(largestSquareSize + 1, true, Direction.NONE, right);
+		moveRobot(largestSquareSize + 1 + fixAmount, true, Direction.NONE, right);
 	}
 	private void commandSwitcher(Direction direction) {
 		switch (direction) {
@@ -152,7 +141,7 @@ public class BlankKarel extends SuperKarel {
 		}
 		commandSwitcher(endTurn);
 	}
-	private int calculateBlockSize(int minimum) {
+	private int calculateLargestSquareSize(int minimum) {
 		if (minimum % 2 == 0)
 			minimum -= 1;
 		return minimum / 2 - 2;
@@ -162,10 +151,10 @@ public class BlankKarel extends SuperKarel {
 
 		int minimum = Math.min(this.width, this.height);
 		int maximum = Math.max(this.width, this.height);
-		blockSize = calculateBlockSize(minimum);
+		largestSquareSize = calculateLargestSquareSize(minimum);
 		numSteps = 0;
 
-		if (this.width < 6 || this.height < 6) {
+		if (this.width <= 6 || this.height <= 6) {
 			System.out.println("The dimension is not valid to create the required shape");
 		} else {
 			if (this.width % 2 == 1 && this.height % 2 == 1)
@@ -182,7 +171,7 @@ public class BlankKarel extends SuperKarel {
 				handleEvenCase(false, minimum, maximum);
 			else
 				handleMixCase(true, minimum, maximum);
-			System.out.println("Width: " + width + ", Height: " + height + ", BlockSize: " + blockSize + ", Number of steps taken: " + numSteps);
+			System.out.println("Width: " + width + ", Height: " + height + ", BlockSize: " + largestSquareSize + ", Number of steps taken: " + numSteps);
 		}
 	}
 }
