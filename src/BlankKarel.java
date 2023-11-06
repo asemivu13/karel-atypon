@@ -10,16 +10,11 @@ public class BlankKarel extends SuperKarel {
 	private int width;
 	private int height;
 	private int numSteps;
-	private int minimum;
-	private int maximum;
+	private int[] dimensions = new int[2];
 
 	public void run() {
-		numSteps = 0;
+		initalize();
 		calculateDimension();
-
-		minimum = Math.min(width, height);
-		maximum = Math.max(width, height);
-		largestSquareSize = calculateLargestSquareSize(minimum);
 
 		if (width <= 6 || height <= 6) {
 			System.out.println("The dimension is not valid to create the required shape");
@@ -44,10 +39,14 @@ public class BlankKarel extends SuperKarel {
 					", Number of steps taken: " + numSteps);
 		}
 	}
+	private void initalize() {
+		numSteps = 0;
+		setBeepersInBag(1000);
+	}
 	public void calculateDimension() {
-		width = calculateBlocksUntilReachWall();
+		dimensions[0] = calculateBlocksUntilReachWall();
 		turnLeft();
-		height = calculateBlocksUntilReachWall();
+		dimensions[1] = calculateBlocksUntilReachWall();
 	}
 	private int calculateBlocksUntilReachWall() {
 		int counter = 1;
